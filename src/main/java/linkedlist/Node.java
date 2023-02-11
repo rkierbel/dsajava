@@ -30,11 +30,11 @@ public class Node {
     String prefix = """
              _________
             |         |""";
+    String suffix = """
+            |_________|""";
+
     System.out.println(prefix);
     System.out.println("|    " + content + "    |");
-    String suffix = """
-            |         |
-            |_________|""";
     System.out.println(suffix);
   }
 

@@ -6,6 +6,7 @@ public class LinkedListDriver {
     Node A = new Node("A");
     Node B = new Node("B");
     Node C = new Node("C");
+    Node D = new Node("D");
     LinkedList ll = new LinkedList();
     ll.insertAt(A, 0);
     ll.insertAtTail(C);
@@ -14,6 +15,9 @@ public class LinkedListDriver {
     ll.insertAtHead(B); //will fail -> no duplicates
     System.out.println("REMOVED : ");
     ll.remove(1).content();
+    System.out.println("---------------");
+    ll.addBefore(D, A);
+    ll.addBefore(B, A);
     ll.printList();
   }
 }

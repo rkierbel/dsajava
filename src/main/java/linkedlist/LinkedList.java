@@ -7,7 +7,7 @@ public class LinkedList {
   private int size;
 
   public void printList() {
-    if (head == null) {
+    if (isEmpty()) {
       System.out.println("Nothing to print !");
       return;
     }
@@ -21,7 +21,7 @@ public class LinkedList {
 
   public void insertAtHead(Node newNode) {
     if (isNullNode(newNode)) return;
-    if (head == null) {
+    if (isEmpty()) {
       defineHeadAndTail(newNode);
       return;
     }
@@ -38,7 +38,7 @@ public class LinkedList {
 
   public void insertAtTail(Node newNode) {
     if (isNullNode(newNode)) return;
-    if (head == null) {
+    if (isEmpty()) {
       defineHeadAndTail(newNode);
       return;
     }
@@ -55,7 +55,7 @@ public class LinkedList {
 
   public void insertAt(Node newNode, int pos) {
     if (isNullNode(newNode)) return;
-    if (head == null) {
+    if (isEmpty()) {
       defineHeadAndTail(newNode);
       return;
     }
@@ -70,6 +70,26 @@ public class LinkedList {
     if (size == 0 || pos == 0) insertAtHead(newNode);
     if (pos == size + 1) insertAtTail(newNode);
     else insert(newNode, pos);
+  }
+
+  public void addBefore(Node toAdd, Node before) {
+    if (toAdd == null || before == null || !contains(before)) {
+      System.out.println("Invalid arguments !");
+      return;
+    }
+    if (contains(toAdd)) {
+      System.out.println("Node to add is already in the list !");
+      return;
+    }
+    if (before.equals(head)) {
+      insertAtHead(toAdd);
+      return;
+    }
+    Node newPrevious = before.getPrevious();
+    newPrevious.setNext(toAdd);
+    toAdd.setPrevious(newPrevious);
+    before.setPrevious(toAdd);
+    toAdd.setNext(before);
   }
 
   private void insert(Node newNode, int pos) {
@@ -89,20 +109,22 @@ public class LinkedList {
   }
 
   public Node removeHead() {
-    if (head == null) return null;
+    if (isEmpty()) return null;
     Node removed = head;
     Node newHead = head.getNext();
     newHead.setPrevious(null);
+    removed.setNext(null);
     head = newHead;
     size--;
     return removed;
   }
 
   public Node removeTail() {
-    if (tail == null) return null;
+    if (isEmpty()) return null;
     Node removed = tail;
     Node newTail = tail.getPrevious();
     newTail.setNext(null);
+    removed.setPrevious(null);
     tail = newTail;
     size--;
     return removed;
@@ -113,7 +135,7 @@ public class LinkedList {
       System.out.println("The provided index is out of bounds !");
       return null;
     }
-    if (pos == 0) return removeHead();
+    if (pos == 0 && !isEmpty()) return removeHead();
     if (pos == size - 1) return removeTail();
     Node current = head;
     int removalPoint = 0;
@@ -130,12 +152,12 @@ public class LinkedList {
   }
 
   public boolean contains(Node n) {
-    if (head == null) return false;
+    if (isEmpty()) return false;
     Node current = head;
-    if (this.size == 1) return current.equals(n);
+    if (current.equals(n)) return true;
     while (current.hasNext()) {
-      if (current.equals(n)) return true;
       current = current.getNext();
+      if (current.equals(n)) return true;
     } return false;
   }
 
@@ -160,6 +182,10 @@ public class LinkedList {
     tail.setNext(null);
     tail.setPrevious(null);
     size++;
+  }
+
+  public boolean isEmpty() {
+    return head == null;
   }
 
   public int getSize() {
