@@ -37,7 +37,7 @@ public class LinkedList {
   }
 
   public void insertAtTail(Node newNode) {
-    if (isNullNode(newNode) || this.contains(newNode)) return;
+    if (isNullNode(newNode)) return;
     if (head == null) {
       defineHeadAndTail(newNode);
       return;
