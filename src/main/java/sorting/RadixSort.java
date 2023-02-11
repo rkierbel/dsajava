@@ -8,7 +8,27 @@ public class RadixSort {
     System.out.println("WILL SORT " + Arrays.toString(toSort));
     radixSort(toSort, 10, 4);
     System.out.println("SORTED ! " + Arrays.toString(toSort));
+  }
 
+  private static void radixSort(int[] toSort, int radix, int width) {
+    int elems = toSort.length;
+    for (int pos = 1; pos <= width; pos++) {
+      int[] digits = new int[elems];
+      for (int i = 0; i < elems; i++) digits[i] = getDigitWithDiv(pos, toSort[i], radix);
+      int[] countArr = new int[radix];
+      for (int i : digits) {
+        countArr[i]++;
+      }
+      for (int i = 1; i < countArr.length; i++) {
+        countArr[i] += countArr[i - 1];
+      }
+      int[] tmp = new int[elems];
+      for (int k = elems - 1; k >= 0; k--) {
+        int valInCount = --countArr[digits[k]];
+        tmp[valInCount] = toSort[k];
+      }
+      System.arraycopy(tmp, 0, toSort, 0, tmp.length);
+    }
   }
 
   private static void rdxSort(int[] toSort, int radix, int width) {
@@ -33,26 +53,6 @@ public class RadixSort {
     System.arraycopy(tmp, 0, toSort, 0, tmp.length);
   }
 
-  private static void radixSort(int[] toSort, int radix, int width) {
-    int elems = toSort.length;
-    for (int pos = 1; pos <= width; pos++) {
-      int[] digits = new int[elems];
-      for (int i = 0; i < elems; i++) digits[i] = getDigitWithDiv(pos, toSort[i], radix);
-      int[] countArr = new int[radix];
-      for (int i : digits) {
-        countArr[i]++;
-      }
-      for (int i = 1; i < countArr.length; i++) {
-        countArr[i] += countArr[i - 1];
-      }
-      int[] tmp = new int[elems];
-      for (int k = elems - 1; k >= 0; k--) {
-        int valInCount = --countArr[digits[k]];
-        tmp[valInCount] = toSort[k];
-      }
-      System.arraycopy(tmp, 0, toSort, 0, tmp.length);
-    }
-  }
   private static int getDigit(int pos, int num, int radix) {
     return num / (int) Math.pow(10, pos) % radix; //10 ^ 0 == 1
   }
@@ -63,5 +63,4 @@ public class RadixSort {
       pos--;
     } return num % radix;
   }
-
 }

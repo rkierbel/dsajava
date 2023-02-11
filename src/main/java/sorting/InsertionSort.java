@@ -13,14 +13,16 @@ public class InsertionSort {
 
   private static void insertionSort(int[] toSort) {
     for (int unsortedPartitionIndex = 1; unsortedPartitionIndex < toSort.length; unsortedPartitionIndex++) {
-      int newElem = toSort[unsortedPartitionIndex];
-      int i;
-      for (i = unsortedPartitionIndex; i > 0 && toSort[i - 1] > newElem; i--) {
-        toSort[i] = toSort[i - 1];
-        System.out.println(Arrays.toString(toSort));
-      }
-      toSort[i] = newElem;
-      System.out.println(Arrays.toString(toSort));
+      insert(toSort, unsortedPartitionIndex);
     }
+  }
+
+  public static void insert(int[] arr, int unsortedPartitionIdx) {
+    int newElem = arr[unsortedPartitionIdx];
+    int i;
+    for (i = unsortedPartitionIdx; i > 0 && arr[i - 1] > newElem; i--) {
+      arr[i] = arr[i - 1];
+    }
+    arr[i] = newElem;
   }
 }
