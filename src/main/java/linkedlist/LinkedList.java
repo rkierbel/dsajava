@@ -2,8 +2,8 @@ package linkedlist;
 
 public class LinkedList {
 
-  private Node head;
-  private Node tail;
+  private LinkedListNode head;
+  private LinkedListNode tail;
   private int size;
 
   public void printList() {
@@ -11,7 +11,7 @@ public class LinkedList {
       System.out.println("Nothing to print !");
       return;
     }
-    Node current = head;
+    LinkedListNode current = head;
     current.content();
     while (current.hasNext()) {
       current = current.getNext();
@@ -19,60 +19,60 @@ public class LinkedList {
     }
   }
 
-  public void insertAtHead(Node newNode) {
-    if (isNullNode(newNode)) return;
+  public void insertAtHead(LinkedListNode newLinkedListNode) {
+    if (isNullNode(newLinkedListNode)) return;
     if (isEmpty()) {
-      defineHeadAndTail(newNode);
+      defineHeadAndTail(newLinkedListNode);
       return;
     }
-    if (this.contains(newNode)) {
+    if (this.contains(newLinkedListNode)) {
       System.out.println("Node already in the list !");
       return;
     }
-    head.setPrevious(newNode);
-    newNode.setNext(head);
-    newNode.setPrevious(null);
-    head = newNode;
+    head.setPrevious(newLinkedListNode);
+    newLinkedListNode.setNext(head);
+    newLinkedListNode.setPrevious(null);
+    head = newLinkedListNode;
     size++;
   }
 
-  public void insertAtTail(Node newNode) {
-    if (isNullNode(newNode)) return;
+  public void insertAtTail(LinkedListNode newLinkedListNode) {
+    if (isNullNode(newLinkedListNode)) return;
     if (isEmpty()) {
-      defineHeadAndTail(newNode);
+      defineHeadAndTail(newLinkedListNode);
       return;
     }
-    if (this.contains(newNode)) {
+    if (this.contains(newLinkedListNode)) {
       System.out.println("Node already in the list !");
       return;
     }
-    tail.setNext(newNode);
-    newNode.setPrevious(tail);
-    newNode.setNext(null);
-    tail = newNode;
+    tail.setNext(newLinkedListNode);
+    newLinkedListNode.setPrevious(tail);
+    newLinkedListNode.setNext(null);
+    tail = newLinkedListNode;
     size++;
   }
 
-  public void insertAt(Node newNode, int pos) {
-    if (isNullNode(newNode)) return;
+  public void insertAt(LinkedListNode newLinkedListNode, int pos) {
+    if (isNullNode(newLinkedListNode)) return;
     if (isEmpty()) {
-      defineHeadAndTail(newNode);
+      defineHeadAndTail(newLinkedListNode);
       return;
     }
     if (isInvalidIndex(pos)) {
       System.out.println("The provided index is out of bounds !");
       return;
     }
-    if (this.contains(newNode)) {
+    if (this.contains(newLinkedListNode)) {
       System.out.println("Node already in the list !");
       return;
     }
-    if (size == 0 || pos == 0) insertAtHead(newNode);
-    if (pos == size + 1) insertAtTail(newNode);
-    else insert(newNode, pos);
+    if (size == 0 || pos == 0) insertAtHead(newLinkedListNode);
+    if (pos == size + 1) insertAtTail(newLinkedListNode);
+    else insert(newLinkedListNode, pos);
   }
 
-  public void addBefore(Node toAdd, Node before) {
+  public void addBefore(LinkedListNode toAdd, LinkedListNode before) {
     if (toAdd == null || before == null || !contains(before)) {
       System.out.println("Invalid arguments !");
       return;
@@ -85,33 +85,33 @@ public class LinkedList {
       insertAtHead(toAdd);
       return;
     }
-    Node newPrevious = before.getPrevious();
+    LinkedListNode newPrevious = before.getPrevious();
     newPrevious.setNext(toAdd);
     toAdd.setPrevious(newPrevious);
     before.setPrevious(toAdd);
     toAdd.setNext(before);
   }
 
-  private void insert(Node newNode, int pos) {
-    Node current = head;
+  private void insert(LinkedListNode newLinkedListNode, int pos) {
+    LinkedListNode current = head;
     int insertionPoint = 0;
     while (current.hasNext()) {
       if (insertionPoint == pos) break;
       insertionPoint++;
       current = current.getNext();
     }
-    current.getPrevious().setNext(newNode);
-    newNode.setPrevious(current.getPrevious());
-    newNode.setNext(current);
-    current.setPrevious(newNode);
+    current.getPrevious().setNext(newLinkedListNode);
+    newLinkedListNode.setPrevious(current.getPrevious());
+    newLinkedListNode.setNext(current);
+    current.setPrevious(newLinkedListNode);
     current.setNext(null);
     size++;
   }
 
-  public Node removeHead() {
+  public LinkedListNode removeHead() {
     if (isEmpty()) return null;
-    Node removed = head;
-    Node newHead = head.getNext();
+    LinkedListNode removed = head;
+    LinkedListNode newHead = head.getNext();
     newHead.setPrevious(null);
     removed.setNext(null);
     head = newHead;
@@ -119,10 +119,10 @@ public class LinkedList {
     return removed;
   }
 
-  public Node removeTail() {
+  public LinkedListNode removeTail() {
     if (isEmpty()) return null;
-    Node removed = tail;
-    Node newTail = tail.getPrevious();
+    LinkedListNode removed = tail;
+    LinkedListNode newTail = tail.getPrevious();
     newTail.setNext(null);
     removed.setPrevious(null);
     tail = newTail;
@@ -130,55 +130,56 @@ public class LinkedList {
     return removed;
   }
 
-  public Node remove(int pos) {
+  public LinkedListNode remove(int pos) {
     if (isInvalidIndex(pos)) {
       System.out.println("The provided index is out of bounds !");
       return null;
     }
     if (pos == 0 && !isEmpty()) return removeHead();
     if (pos == size - 1) return removeTail();
-    Node current = head;
+    LinkedListNode current = head;
     int removalPoint = 0;
     while (current.hasNext()) {
       if (removalPoint == pos) break;
       removalPoint++;
       current = current.getNext();
     }
-    Node removed = current;
+    LinkedListNode removed = current;
     current.getPrevious().setNext(current.getNext());
     current.getNext().setPrevious(current.getPrevious());
     size--;
     return removed;
   }
 
-  public boolean contains(Node n) {
+  public boolean contains(LinkedListNode n) {
     if (isEmpty()) return false;
-    Node current = head;
+    LinkedListNode current = head;
     if (current.equals(n)) return true;
     while (current.hasNext()) {
       current = current.getNext();
       if (current.equals(n)) return true;
-    } return false;
+    }
+    return false;
   }
 
   private boolean isInvalidIndex(int pos) {
     return pos > size + 1 || pos < 0;
   }
 
-  private boolean isNullNode(Node newNode) {
-    if (newNode == null) {
+  private boolean isNullNode(LinkedListNode newLinkedListNode) {
+    if (newLinkedListNode == null) {
       System.out.println("Cannot insert a null node !");
       return true;
     }
     return false;
   }
 
-  private void defineHeadAndTail(Node newNode) {
+  private void defineHeadAndTail(LinkedListNode newLinkedListNode) {
     System.out.println("Linked List has no head. Defining head and tail.");
-    head = newNode;
+    head = newLinkedListNode;
     head.setNext(null);
     head.setPrevious(null);
-    tail = newNode;
+    tail = newLinkedListNode;
     tail.setNext(null);
     tail.setPrevious(null);
     size++;

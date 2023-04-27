@@ -19,6 +19,7 @@ public class QuickSort {
 
   private static int partition(int[] arr, int start, int end) {
     int pivot = arr[start]; //start index of array or sub-array
+    System.out.println("PIVOT -> " + pivot);
     int i = start;
     int j = end;
     while (i < j) {
@@ -34,6 +35,7 @@ public class QuickSort {
       }
     }
     arr[i] = pivot;
+    System.out.println("------ "  + Arrays.toString(arr));
     return i;
   }
 

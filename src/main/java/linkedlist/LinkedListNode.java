@@ -1,28 +1,28 @@
 package linkedlist;
 
-public class Node {
+public class LinkedListNode {
 
-  private Node next;
-  private Node previous;
+  private LinkedListNode next;
+  private LinkedListNode previous;
   private final String content;
 
-  public Node(String content) {
+  public LinkedListNode(String content) {
     this.content = content;
   }
 
-  public Node getNext() {
+  public LinkedListNode getNext() {
     return next;
   }
 
-  public void setNext(Node next) {
+  public void setNext(LinkedListNode next) {
     this.next = next;
   }
 
-  public Node getPrevious() {
+  public LinkedListNode getPrevious() {
     return previous;
   }
 
-  public void setPrevious(Node previous) {
+  public void setPrevious(LinkedListNode previous) {
     this.previous = previous;
   }
 
@@ -45,7 +45,7 @@ public class Node {
   @Override
   public boolean equals(Object obj) {
     if (obj == null) return false;
-    if (!(obj instanceof Node n)) return false;
+    if (!(obj instanceof LinkedListNode n)) return false;
     return this.content.equals(n.content);
   }
 }
