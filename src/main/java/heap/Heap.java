@@ -2,7 +2,7 @@ package heap;
 
 public class Heap {
 
-  PriorityQueue queue;
+  PriorityQueue PQ;
   int queueSize;
 
   public Heap(int n) {
@@ -16,19 +16,19 @@ public class Heap {
   }
 
   void heapSort(long[] input, int n) {
-    for (int i = 0; i < n; i++) input[i] = extractMin(this.queue);
+    for (int i = 0; i < n; i++) input[i] = extractMin(this.PQ);
   }
 
   Heap make(long[] input, int n) {
     this.priorityQueueInit();
     for (int i = 0; i < n; i++) {
-      insert(this.queue, input[i]);
+      insert(this.PQ, input[i]);
     }
     return this;
   }
 
   void priorityQueueInit() {
-    this.queue = new PriorityQueue(0, this.queueSize+1);
+    this.PQ = new PriorityQueue(0, this.queueSize + 1);
   }
 
   void insert(PriorityQueue q, long item) {
@@ -80,13 +80,14 @@ public class Heap {
         }
       }
     }
+
     if (minIdx != p) {
       swap(q, p, minIdx);
       bubbleUp(q, minIdx);
     }
   }
 
-  private final class PriorityQueue {
+  private static final class PriorityQueue {
     int n;
     long[] queue;
 
